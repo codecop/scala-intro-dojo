@@ -2,6 +2,10 @@ package dojo
 
 import org.scalatest.FunSuite
 
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
+
+@RunWith(classOf[JUnitRunner])
 class EulerProblemSuite extends FunSuite{
 
   test("1) The sum of all the multiples of 3 or 5 below 10 should be 23") {
