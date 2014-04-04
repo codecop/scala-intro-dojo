@@ -19,7 +19,7 @@ object EulerProblem {
   }
 
   def largestPrimeFactorOf(number: Int): Int = {
-	val upper:Int = Math.sqrt(number).toInt
+	val upper:Int = scala.math.sqrt(number).toInt
     var n = number
 	(2 to upper).filter( p => {
 	  
