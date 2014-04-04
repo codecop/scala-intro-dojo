@@ -1,7 +1,10 @@
 package intro
 
 import org.scalatest.FunSuite
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
 
+@RunWith(classOf[JUnitRunner])
 class CollectionsSuite extends FunSuite {
 
   example {
@@ -287,13 +290,13 @@ class CollectionsSuite extends FunSuite {
      *
      * For example:
      */
-    List(1, 2, 3, 4).reduce((n1, n2) => n1 + n2)
+    List(1, 2, 3, 4).reduceLeft((n1, n2) => n1 + n2)
     // output: 10
 
     /**
      * Or using two wildcard-arguments:
      */
-    List(1, 2, 3, 4).reduce(_ + _)
+    List(1, 2, 3, 4).reduceLeft(_ + _)
     // output: 10   
   }
 

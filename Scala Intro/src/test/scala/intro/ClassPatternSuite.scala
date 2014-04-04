@@ -1,10 +1,13 @@
 package intro
 
 import org.scalatest.FunSuite
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
 
 /**
  * Workshop exercise showing classes and objects
  */
+@RunWith(classOf[JUnitRunner])
 class ClassPatternSuite extends FunSuite {
 
   //Traits are ALMOST like 'interfaces', they can't be instantiated directly

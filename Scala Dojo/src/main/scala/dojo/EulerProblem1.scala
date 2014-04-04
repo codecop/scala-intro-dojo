@@ -4,7 +4,7 @@ object EulerProblem1 {
 
   def main(args: Array[String]): Unit = {
     val sum = sumOfMultiplesBelow(1000)
-    println(s"The sum of all the multiples of 3 or 5 below 1000 is $sum")
+    println("The sum of all the multiples of 3 or 5 below 1000 is " + sum)
   }
 
   def sumOfMultiplesBelow(limit: Int): Int = {
