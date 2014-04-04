@@ -17,7 +17,7 @@ class NullExerciseSuite extends FunSuite {
 
   def length(s: String): Int = s.length()
 
-  length(null)
+  // length(null)
 
   /**
    * First exercise: delete the code above ^^^^.
@@ -44,10 +44,10 @@ class NullExerciseSuite extends FunSuite {
    *
    */
   test("Use None to express the absence of a value and use Some for values") {
-    val hello: Option[String] = ???
+    val hello: Option[String] = Some("asdasd")
     assert(hello.isDefined)
 
-    val name: Option[String] = ???
+    val name: Option[String] = None
     assert(name.isEmpty)
   }
 
@@ -71,7 +71,7 @@ class NullExerciseSuite extends FunSuite {
    *
    */
   test("If an Option is not defined there can be a default value") {
-    assert("Hello World" === "Hello " + maybe.get)
+    assert("Hello World" === "Hello " + maybe.getOrElse("World"))
   }
   
   
@@ -84,7 +84,9 @@ class NullExerciseSuite extends FunSuite {
     
     val names = List(Some("Peter"), None, Some("Mary"))
     
-    assert(names.flatMap(n => n.map("Hello " + _)) === ???)
+    assert(names.flatMap(n => n.map("Hello " + _)) === List("Hello Peter", "Hello Mary") )
+    assert(names.flatten.map("Hello " + _) === List("Hello Peter", "Hello Mary") )
+
   }
   
 
@@ -107,7 +109,7 @@ class NullExerciseSuite extends FunSuite {
       certainlyAName <- mayBeAName
     } yield "Hello " + certainlyAName
 
-    assert(??? == greetings.size)
+    assert(3 == greetings.size)
   }
   
   /**

@@ -37,7 +37,7 @@ class ClassPatternSuite extends FunSuite {
     val classInstance = new LispDialect("Racket")
     assert(classInstance != null)
 
-    val objectInstance = ???
+    val objectInstance = Scala
     assert(objectInstance != null)
   })
 
@@ -47,6 +47,8 @@ class ClassPatternSuite extends FunSuite {
    * Types of the parameters have to be supplied to compiler in method signatures.
    */
   class Coder(val lang: Language = Java, var experience: Int = 0) {
+
+    def this(experience: Int) = this(Scala, experience)
 
     // return type can be specified, don't need braces if it's just one line
     def function(s: String, i: Int): Int = s.toInt + i
@@ -78,7 +80,7 @@ class ClassPatternSuite extends FunSuite {
   test("re-assign variable") {
     val coder = new Coder
 
-    ???
+    coder.experience = 1
 
     assert(coder.experience == 1)
   }
@@ -87,9 +89,12 @@ class ClassPatternSuite extends FunSuite {
    * We need a Ruby coder with 4 years of experience, and we need him now!!!
    */
   test("construct an instance") {
-    val coder = new Coder(???, ???)
 
-    assert(coder.lang === ???)
+    val ruby = new Language{ def isFunctional = true }
+
+    val coder = new Coder( ruby, 4)
+
+    assert(coder.lang === ruby)
     assert(coder.experience === 4)
 
   }
@@ -102,8 +107,8 @@ class ClassPatternSuite extends FunSuite {
     val coder = new Coder(Scala)
 
     val result = coder.position
-    assert(result === ???)
-    assert(result.getClass === classOf[????])
+    assert(result === "Junior")
+    assert(result.getClass === classOf[String])
   }
 
   /**
@@ -141,8 +146,8 @@ class ClassPatternSuite extends FunSuite {
     val odersky = new FamousScalaCoder("Odersky", 55)
     odersky.age += 1
 
-    assert(odersky.age === ???)
-    assert(odersky.experience === ???)
+    assert(odersky.age === 56)
+    assert(odersky.experience === 10)
   })
 
   /**
@@ -151,7 +156,7 @@ class ClassPatternSuite extends FunSuite {
   test("extending a class passing arguments to the superclass' default constructor ") {
 
     //create a class where you can pass 
-    val you: Coder = ???
+    val you: Coder = new Coder(10)
     assert(you.lang === Scala)
   }
 
@@ -186,13 +191,13 @@ class ClassPatternSuite extends FunSuite {
       case _ => 0
     }
 
-    assert(7 == rate(???))
-    assert(rate(OS("Windows", 8)) === ???)
-    assert(rate(OS("OS X", 9)) === ???)
-    assert(rate(OS("OS X", 11)) === ???)
-    assert(rate(OS("Mint", 13)) === ???)
-    assert(rate(OS("Mint", 14)) === ???)
-    assert(6 == rate(???))
+    assert(7 == rate(OS("Android", 4)))
+    assert(rate(OS("Windows", 8)) === 3)
+    assert(rate(OS("OS X", 9)) === 4)
+    assert(rate(OS("OS X", 11)) === 0)
+    assert(rate(OS("Mint", 13)) === 5)
+    assert(rate(OS("Mint", 14)) === 5)
+    assert(6 == rate(OS("Android", 1)))
 
   }
 
@@ -201,8 +206,9 @@ class ClassPatternSuite extends FunSuite {
     def matcher(l: List[Int]) = l match {
 
       case List(a, b, c) => 1
-
-      case _ => ???
+      case List(a, b, c, d) => 2
+      case List(a, b, c, d, e, f) => 3 
+      case _ => 0
     }
 
     assert(matcher(List()) == 0)

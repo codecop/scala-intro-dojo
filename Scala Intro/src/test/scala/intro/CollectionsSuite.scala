@@ -18,7 +18,7 @@ class CollectionsSuite extends FunSuite {
    * Can you correct the list so that it satisfies the conditions?
    */
   test("should contain numbers from 1 to 3") {
-    val list = List(0) // fix
+    val list = List(1,2,3) // fix
 
     assert(list.size === 3, "List should have 3 elements")
 
@@ -44,8 +44,8 @@ class CollectionsSuite extends FunSuite {
    */
   test("accessing elements") {
     val flavors = List("Banana", "Strawberry", "Chocolate", "Vanilla")
-    val thirdElement = ???
-    val firstElement = ??? // bonus: use specific method to get the first element
+    val thirdElement = flavors(2)
+    val firstElement = flavors.head // bonus: use specific method to get the first element
 
     assert("Chocolate" === thirdElement, "Write an expression to get Chocolate")
     assert("Banana" === firstElement, "Write an expression to get Banana")
@@ -86,8 +86,8 @@ class CollectionsSuite extends FunSuite {
    */
   test("adding an element to an immutable list") {
     val incompleteTdd = List("test/fail", "implement/pass")
-    val refactorLast = incompleteTdd // fix this, append "refactor" 
-    val refactorFirst = incompleteTdd // fix this, prepend "refactor"
+    val refactorLast = incompleteTdd :+ "refactor" // fix this, append "refactor" 
+    val refactorFirst = "refactor" :: incompleteTdd // fix this, prepend "refactor"
 
     // Note that original "incompleteTdd" collection was not modified!
     assert(incompleteTdd.size === 2, "The original tdd collection should contain 2 elements")
@@ -117,7 +117,7 @@ class CollectionsSuite extends FunSuite {
     val sax = List("alt sax", "tenor sax", "baritone sax")
     val brass = List("trumpet", "trombone")
     val rhythm = List("piano", "bass", "guitar", "drums")
-    val jazzOrchestra = List() // fix this
+    val jazzOrchestra = sax ++ brass ++ rhythm // fix this
 
     // Note that the original collections are not changed
     assert(sax.size === 3, "Should contain 3 sax types (sopran sax is rarely used)")
@@ -149,7 +149,7 @@ class CollectionsSuite extends FunSuite {
    */
   test("filtering a range for even numbers") {
     val numbers = (1 to 8)
-    val evenNrs = numbers.filter(n => n % 3 == 1) // fix
+    val evenNrs = numbers.filter(_ % 2 == 0) // fix
 
     assert(evenNrs.size === 4, "Should find 4 even numbers")
     assert(!evenNrs.contains(1), "Should not contain 1")
@@ -172,7 +172,7 @@ class CollectionsSuite extends FunSuite {
    */
   test("filtering numbers greater than 4") {
     val numbers = (1 until 8)
-    val greaterThanFour = numbers.filter(_ > 44) // fix
+    val greaterThanFour = numbers.filter(_ > 4) // fix
 
     assert(numbers.contains(8) === false, "Should not contain 8 (note the *until*)")
 
@@ -198,7 +198,7 @@ class CollectionsSuite extends FunSuite {
         "Roland",
         "Raphael",
         "Ernest")
-    val withE = names.filter(???) // fix
+    val withE = names.filter(_.toLowerCase.contains("e")) // fix
 
     assert(withE.size === 3)
     assert(withE.head === "Matthew", "First name should be Matthew")
@@ -231,8 +231,8 @@ class CollectionsSuite extends FunSuite {
    */
   test("find a doctor and how many developers") {
     val people = List("Fritz(dev)", "Franz(dev)", "Fred(doc)", "Fran(dev)")
-    val isThereADoctor = ??? // use "exists" on the list
-    val howManyDevs = ??? // use "count" on the list
+    val isThereADoctor = people.exists(_.contains("(doc)")) // use "exists" on the list
+    val howManyDevs = people.count(_.endsWith("(dev)")) // use "count" on the list
 
     assert(true === isThereADoctor, "There should be doctor")
     assert(3 === howManyDevs, "There should be 3 developers")
@@ -272,10 +272,8 @@ class CollectionsSuite extends FunSuite {
         "batman@batcave.com",
         "superman@solitude.com",
         "heman@grayskull.com")
-    val domains = emails.map { e =>
-      ??? // implement
-    }
-    val bases = domains.map(d => ???) // implement
+    val domains = emails.map { e => e.split("@")(1) }
+    val bases = domains.map(d => d.dropRight(4)) // implement
 
     assert(List("batcave.com", "solitude.com", "grayskull.com") === domains)
     assert(List("batcave", "solitude", "grayskull") === bases)
@@ -306,7 +304,7 @@ class CollectionsSuite extends FunSuite {
    */
   test("reducing") {
     def strJoin(strings: List[String], joiner: String): String = {
-      ??? // implement
+      strings.reduceLeft( _ + joiner + _ )  // implement
     }
 
     assert(strJoin(List("rock", "paper", "scissors"), joiner = "/") === "rock/paper/scissors")
@@ -367,9 +365,9 @@ class CollectionsSuite extends FunSuite {
       "beer" -> 2.20,
       "cafe" -> 3.40)
 
-    val pubAndStreet = atThePub // add "ice-cream" costing 2.30
-    val pubAndStreetCost = -1 // don't add manually!
-    val consumedItemsWithE = List("") // all things consumed in the pub and the street
+    val pubAndStreet = atThePub + ("ice-cream" -> 2.3)  // add "ice-cream" costing 2.30
+    val pubAndStreetCost = pubAndStreet.values.sum // don't add manually!
+    val consumedItemsWithE = pubAndStreet.keys.filter( _.contains("e") ) // all things consumed in the pub and the street
 
     // Adding "ice-cream" did not modify the original map, since it's immutable
     assert(atThePub.get("ice-cream") === None, "Ice-cream was not taken in the pub!")
@@ -382,8 +380,8 @@ class CollectionsSuite extends FunSuite {
 
     // Extra bonus: find the highest price 
     // HINT: use a combination of "reduce" and "if"
-    def mostExpensivePrice(items: Map[String, Double]): Double = ???
-    //assert(mostExpensivePrice(pubAndStreet) === 7.50)
+    def mostExpensivePrice(items: Map[String, Double]): Double = items.values.max
+    assert(mostExpensivePrice(pubAndStreet) === 7.50)
   }
 
   /**
